@@ -1,0 +1,68 @@
+:root{
+    --num-columnas: 10;
+    --num-filas: 10;
+    --size: 40px;
+}
+
+#tablero{
+    padding: 10px;
+    display:grid;
+    grid-template-columns: repeat(var(--num-columnas), var(--size));
+    grid-template-rows: repeat(var(--num-filas), var(--size));
+    background-color: #BBBBBB;
+    border-left: 2px solid #D3D3D3;
+    border-top: 2px solid #D3D3D3;
+    border-right: 2px solid #A9A9A9;
+    width: calc(var(--num-columnas)*var(--size));
+}
+#tablero div{
+    background-color: lime;
+    border-left: 2px solid lightgreen;
+    border-top: 2px solid lightgreen;
+    border-right: 2px solid green;
+    border-bottom: 2px solid green;
+    text-align: center;
+    line-height: var(--size);
+}
+
+
+#tablero div.destapado{
+    font-weight: bold;
+    background-color: saddlebrown;
+    border-left: 1px solid peru;
+    border-top: 1px solid peru;
+    border-right: 1px solid burlywood;
+    border-bottom: 1px solid burlywood;
+    text-shadow: 1px 1px 2px #999999;
+}
+#tablero div.sinmarcar{
+    background-color: #FF0000;
+}
+#tablero div.banderaErronea{
+    background-color: lime;
+    border: 5px solid red;
+}
+
+
+#tablero div.c1{ color: #00ffff;}
+#tablero div.c2{ color: #0099ff;}
+#tablero div.c3{ color: #0033ff;}
+#tablero div.c4{ color: #00ff33;}
+#tablero div.c5{ color: #ccff00;}
+#tablero div.c6{ color: #ffcc00;}
+#tablero div.c7{ color: #ff3300;}
+#tablero div.c8{ color: #660000;}
+
+.icon-bandera {
+    background-image: url("Banderita.svg");
+	background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: center;
+}
+
+.icon-bomba {
+    background-image: url("Mina.svg");
+	background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: center;
+}
