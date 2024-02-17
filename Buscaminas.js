@@ -1,27 +1,21 @@
-// El jugador gana si todas las casillas no minadas están reveladas.
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
-const gridSize = 10; // Tamaño del tablero
-const mineCount = 7; // Cantidad de minas
-let minesRemaining = mineCount;
-let revealedCells = 0;
-let gameBoard = [];
+const gridSize = 10;
+const mineCount = 6;
+let minesRemaining = mineCount,
+    revealedCells = 0,
+    gameBoard = [];
 
+// Función para crear el tablero
 function createBoard() {
-    document.querySelector("html").style.setProperty("--num-filas", gridSize);
-    document.querySelector("html").style.setProperty("--num-columnas", gridSize);
-
-    // Crea el tablero y llena con casillas vacías.
+    // Establecer el tamaño del tablero en el CSS
+    document.documentElement.style.setProperty("--num-filas", gridSize);
+    document.documentElement.style.setProperty("--num-columnas", gridSize);
+    // Crear el tablero y llenarlo con casillas vacías
     for (let row = 0; row < gridSize; row++) {
-        const rowArray = [];    
+        const rowArray = [];
         for (let col = 0; col < gridSize; col++) {
-            rowArray.push({
-                isMine: false,
-                isRevealed: false,
-                isFlagged: false,
-                neighbors: 0,
-                isFaggedWrong: false
-            });
+            rowArray.push({isMine: false, isRevealed: false, isFlagged: false, neighbors: 0});
             const cell = document.createElement("div");
             cell.classList.add("cell");
             cell.dataset.row = row;
@@ -34,8 +28,8 @@ function createBoard() {
     }
 }
 
+// Función para colocar las minas en el tablero
 function plantMines() {
-    // Coloca minas en ubicaciones aleatorias.
     for (let i = 0; i < mineCount;) {
         let row = Math.floor(Math.random() * gridSize);
         let col = Math.floor(Math.random() * gridSize);
@@ -45,122 +39,83 @@ function plantMines() {
         }
     }
 }
+// Función para calcular el número de minas vecinas para cada casilla
+function calculateNeighbors() {
+    for (let row = 0; row < gridSize; row++)
+        for (let col = 0; col < gridSize; col++)
+            if (!gameBoard[row][col].isMine)
+                for (let r = row - 1; r <= row + 1; r++)
+                    for (let c = col - 1; c <= col + 1; c++)
+                        if (r >= 0 && c >= 0 && r < gridSize && c < gridSize && gameBoard[r][c].isMine)
+                            gameBoard[row][col].neighbors++;
+}
 
+// Función para revelar una casilla del tablero
 function revealCell(row, col) {
-    if (row < 0 || col < 0 || row >= gridSize || col >= gridSize) 
-        return; // Evitar desbordamiento del tablero.
-    
+    if ((row < 0 || col < 0 || row >= gridSize || col >= gridSize) || gameBoard[row][col].isRevealed || gameBoard[row][col].isFlagged) return; //Evitar desbordamiento
     const cell = gameBoard[row][col];
-    if (cell.isRevealed || cell.isFlagged) 
-        return; // No reveles una casilla ya revelada o marcada.
-
     cell.isRevealed = true;
     revealedCells++;
-
-    if (cell.isMine) 
-        endGame(false);
-    else if (cell.neighbors === 0) {
-        // Si la casilla no tiene minas vecinas, revela las casillas adyacentes.
+    if (cell.isMine) endGame(false); //Si la casilla es una mina, se acaba el juego
+    else if (cell.neighbors === 0)
         for (let r = row - 1; r <= row + 1; r++)
             for (let c = col - 1; c <= col + 1; c++)
                 revealCell(r, c);
-    }
     updateBoard();
-    if (revealedCells === gridSize * gridSize - mineCount) // Verifica si el jugador ha ganado.
-        endGame(true); 
+    if (revealedCells === gridSize * gridSize - mineCount) endGame(true);
 }
 
-function calculateNeighbors() {
-    // Calcula el número de minas vecinas para cada casilla.
-    for (let row = 0; row < gridSize; row++) {
-        for (let col = 0; col < gridSize; col++) {
-            if (gameBoard[row][col].isMine)
-                continue;
-
-            for (let r = row - 1; r <= row + 1; r++)
-                for (let c = col - 1; c <= col + 1; c++)
-                    if (r >= 0 && c >= 0 && r < gridSize && c < gridSize && gameBoard[r][c].isMine)
-                        gameBoard[row][col].neighbors++;
-        }
-    }
-}
-
-function endGame(isWin) {
-    // Muestra un mensaje de victoria o derrota.
-    const resultMessage = isWin ? "¡Felicidades, has ganado!" : "¡Has perdido! Inténtalo de nuevo.";
-    message.textContent = resultMessage;
-        revealAllMines();
-    
-    // Deshabilita los clics en el tablero para finalizar el juego.
-    board.removeEventListener("click", handleClick);
-    board.removeEventListener("contextmenu", handleRightClick);
-}
-
-function revealAllMines() {
-    for (let row = 0; row < gridSize; row++) {
-        for (let col = 0; col < gridSize; col++) {
-            if (gameBoard[row][col].isMine)
-                gameBoard[row][col].isRevealed = true;
-        }
-    }
-    updateBoard();
-}
-
+// Manejador de clics en una casilla
 function handleClick(event) {
     const row = parseInt(event.target.dataset.row);
     const col = parseInt(event.target.dataset.col);
-
     revealCell(row, col);
 }
 
+// Manejador de clics con el botón derecho del ratón en una casilla
 function handleRightClick(event) {
     event.preventDefault();
-    const row = parseInt(event.target.dataset.row); 
-    const col = parseInt(event.target.dataset.col);
-    const cell = gameBoard[row][col];
-
-    if (!cell.isRevealed) {
-        if (minesRemaining > 0 || cell.isFlagged) {
-            cell.isFlagged = !cell.isFlagged;
-            if (cell.isFlagged) {
-                event.target.classList.add("icon-bandera");
-                minesRemaining--;
-            } else {
-                event.target.classList.remove("icon-bandera");
-                minesRemaining++;
-            }
-            updateMinesRemaining();
-        }
+    const cell = gameBoard[parseInt(event.target.dataset.row)][parseInt(event.target.dataset.col)];
+    if (!cell.isRevealed && (minesRemaining > 0 || cell.isFlagged)) {
+        cell.isFlagged = !cell.isFlagged;
+        event.target.classList.toggle("icon-bandera", cell.isFlagged);
+        minesRemaining += cell.isFlagged ? -1 : 1;
+        updateMinesRemaining();
     }
 }
 
+// Función para actualizar el contador de minas restantes
 function updateMinesRemaining() {
-    // Actualiza el contador de minas restantes.
     message.textContent = `Minas restantes: ${minesRemaining}`;
 }
 
+// Función para actualizar el tablero después de revelar una casilla
 function updateBoard() {
-    for (let row = 0; row < gridSize; row++) {
+    for (let row = 0; row < gridSize; row++)
         for (let col = 0; col < gridSize; col++) {
             const cell = board.children[row * gridSize + col];
-
             if (gameBoard[row][col].isRevealed) {
-                if (gameBoard[row][col].isMine) 
-                    cell.classList.add("icon-bomba");
-                else {
-                    cell.textContent = gameBoard[row][col].neighbors || "";
-                    cell.classList.add("destapado");
-                }
-            } else if (gameBoard[row][col].isFlagged) 
-                cell.classList.add("icon-bandera");
-            else 
-                cell.className = "cell";
+                cell.classList.add(gameBoard[row][col].isMine ? "icon-bomba" : "destapado", `c${gameBoard[row][col].neighbors}`);
+                cell.textContent = gameBoard[row][col].neighbors || "";
+            } else cell.className = gameBoard[row][col].isFlagged ? "icon-bandera" : "cell";
         }
-    }
 }
 
+// Función para finalizar el juego (victoria o derrota)
+function endGame(isWin) {
+    for (let row = 0; row < gridSize; row++)
+        for (let col = 0; col < gridSize; col++) {
+            const cell = board.children[row * gridSize + col];
+            cell.removeEventListener("click", handleClick);
+            cell.removeEventListener("contextmenu", handleRightClick);
+            if (gameBoard[row][col].isMine) gameBoard[row][col].isRevealed = true;
+            if (gameBoard[row][col].isFlagged && !gameBoard[row][col].isMine) cell.classList.add("banderaErronea");
+        }
+    message.textContent = isWin ? "Felicidades, has ganado!" : "Has perdido! Intentalo de nuevo.";
+}
+
+// Inicialización del juego
 createBoard();
 plantMines();
 calculateNeighbors();
 updateMinesRemaining();
-updateBoard();
