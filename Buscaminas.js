@@ -91,14 +91,23 @@ function updateMinesRemaining() {
 
 // Función para actualizar el tablero después de revelar una casilla
 function updateBoard() {
-    for (let row = 0; row < gridSize; row++)
+    for (let row = 0; row < gridSize; row++) {
         for (let col = 0; col < gridSize; col++) {
             const cell = board.children[row * gridSize + col];
             if (gameBoard[row][col].isRevealed) {
-                cell.classList.add(gameBoard[row][col].isMine ? "icon-bomba" : "destapado", `c${gameBoard[row][col].neighbors}`);
-                cell.textContent = gameBoard[row][col].neighbors || "";
-            } else cell.className = gameBoard[row][col].isFlagged ? "icon-bandera" : "cell";
+                if (gameBoard[row][col].isMine)
+                    cell.classList.add("icon-bomba");
+                else {
+                    cell.textContent = gameBoard[row][col].neighbors || "";
+                    cell.classList.add("destapado");
+                    cell.classList.add("c" + gameBoard[row][col].neighbors);
+                }
+            } else if (gameBoard[row][col].isFlagged)
+                cell.classList.add("icon-bandera");
+            else
+                cell.className = "cell";
         }
+    }
 }
 
 // Función para finalizar el juego (victoria o derrota)
