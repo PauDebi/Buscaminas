@@ -1,7 +1,7 @@
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
 const gridSize = 10;
-const mineCount = 6;
+const mineCount = 30;
 let minesRemaining = mineCount,
     revealedCells = 0,
     gameBoard = [];
@@ -53,10 +53,14 @@ function calculateNeighbors() {
 // Función para revelar una casilla del tablero
 function revealCell(row, col) {
     if ((row < 0 || col < 0 || row >= gridSize || col >= gridSize) || gameBoard[row][col].isRevealed || gameBoard[row][col].isFlagged) return; //Evitar desbordamiento
+    const casilla = board.children[row * gridSize + col];
     const cell = gameBoard[row][col];
     cell.isRevealed = true;
     revealedCells++;
-    if (cell.isMine) endGame(false); //Si la casilla es una mina, se acaba el juego
+    if (cell.isMine){
+        casilla.classList.add("minaExplotada");
+        endGame(false); //Si la casilla es una mina, se acaba el juego
+    }
     else if (cell.neighbors === 0)
         for (let r = row - 1; r <= row + 1; r++)
             for (let c = col - 1; c <= col + 1; c++)
