@@ -1,7 +1,7 @@
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
 const gridSize = 10;
-const mineCount = 5;
+const mineCount = 3;
 let minesRemaining = mineCount,
     revealedCells = 0,
     gameBoard = [];
@@ -117,13 +117,13 @@ function updateBoard() {
 
 // Función para finalizar el juego (victoria o derrota)
 function endGame(isWin) {
-    for (let row = 0; row < gridSize; row++)
+    for (let row = 0; row < gridSize; row++) // Se revelan todas las casillas
         for (let col = 0; col < gridSize; col++) {
             const cell = board.children[row * gridSize + col];
-            cell.removeEventListener("click", handleClick);
+            cell.removeEventListener("click", handleClick);// Se desactivan los eventListener para no desperdiciar memoria
             cell.removeEventListener("contextmenu", handleRightClick);
-            if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged) gameBoard[row][col].isRevealed = true;
-            if (gameBoard[row][col].isFlagged && !gameBoard[row][col].isMine) cell.classList.add("banderaErronea");
+            if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged) cell.classList.add("icon-bandera"); // Si es una mina y no tiene bandera, la celda se revela con la mina
+            if (gameBoard[row][col].isFlagged && !gameBoard[row][col].isMine) cell.classList.add("banderaErronea"); // Si tiene una bandera donde no hay una mina, se marca como erronea
         }
     message.textContent = isWin ? "Felicidades, has ganado!" : "Has perdido! Intentalo de nuevo.";
     message.style.backgroundColor = isWin ? "lime" : "crimson";
