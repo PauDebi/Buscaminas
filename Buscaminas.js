@@ -122,7 +122,8 @@ function endGame(isWin) {
             const cell = board.children[row * gridSize + col];
             cell.removeEventListener("click", handleClick);// Se desactivan los eventListener para no desperdiciar memoria
             cell.removeEventListener("contextmenu", handleRightClick);
-            if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged) cell.classList.add("icon-bandera"); // Si es una mina y no tiene bandera, la celda se revela con la mina
+            if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged && isWin) cell.classList.add("icon-bandera"); // Si es una mina, no tiene bandera y has ganado, la celda se marca como bandera
+            if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged && !isWin) gameBoard[row][col].isRevealed = true; // Si es una mina, no tiene bandera y has perdido, la celda se revela como mina
             if (gameBoard[row][col].isFlagged && !gameBoard[row][col].isMine) cell.classList.add("banderaErronea"); // Si tiene una bandera donde no hay una mina, se marca como erronea
         }
     message.textContent = isWin ? "Felicidades, has ganado!" : "Has perdido! Intentalo de nuevo.";
