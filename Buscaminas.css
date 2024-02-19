@@ -61,11 +61,12 @@ h1 {
 #tablero div.destapado{
     font-weight: bold;
     background-color: saddlebrown;
-    border-left: 1px solid peru;
-    border-top: 1px solid peru;
-    border-right: 1px solid burlywood;
-    border-bottom: 1px solid burlywood;
+    border-left: 2px solid peru;
+    border-top: 2px solid peru;
+    border-right: 2px solid burlywood;
+    border-bottom: 2px solid burlywood;
     text-shadow: 1px 1px 2px #999999;
+    font-size: 16pt;
 }
 #tablero div.minaExplotada{
     background-color: #FF0000;
@@ -84,10 +85,6 @@ h1 {
 #tablero div.c6{ color: #ffcc00;}
 #tablero div.c7{ color: #ff3300;}
 #tablero div.c8{ color: #660000;}
-
-.red {
-    background-color: red;
-}
 
 .icon-bandera {
     background-image: url("Banderita.svg");
