@@ -1,7 +1,8 @@
+/*Pau y Jose*/
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
 const gridSize = 10;
-const mineCount = 30;
+const mineCount = 10;
 let minesRemaining = mineCount,
     revealedCells = 0,
     gameBoard = [];
