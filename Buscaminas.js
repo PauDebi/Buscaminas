@@ -1,8 +1,7 @@
-/*Pau y Jose*/
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
 const gridSize = 10;
-const mineCount = 10;
+const mineCount = 5;
 let minesRemaining = mineCount,
     revealedCells = 0,
     gameBoard = [];
@@ -57,6 +56,7 @@ function revealCell(row, col) {
     const casilla = board.children[row * gridSize + col];
     const cell = gameBoard[row][col];
     cell.isRevealed = true;
+    if (!cell.isMine)
     revealedCells++;
     if (cell.isMine){
         casilla.classList.add("minaExplotada");
@@ -122,10 +122,11 @@ function endGame(isWin) {
             const cell = board.children[row * gridSize + col];
             cell.removeEventListener("click", handleClick);
             cell.removeEventListener("contextmenu", handleRightClick);
-            if (gameBoard[row][col].isMine) gameBoard[row][col].isRevealed = true;
+            if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged) gameBoard[row][col].isRevealed = true;
             if (gameBoard[row][col].isFlagged && !gameBoard[row][col].isMine) cell.classList.add("banderaErronea");
         }
     message.textContent = isWin ? "Felicidades, has ganado!" : "Has perdido! Intentalo de nuevo.";
+    message.classList = "red";
 }
 
 // Inicialización del juego
