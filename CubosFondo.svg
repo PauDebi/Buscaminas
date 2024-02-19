@@ -22,12 +22,6 @@
             <use xlink:href="#rombo" fill="url(#grad2)" transform="rotate(120)"/>
             <use xlink:href="#rombo" fill="url(#grad3)" transform="rotate(-120)"/><!--240-->
         </g>
-        <g id="combo">
-            <use xlink:href="#cubo"/>
-            <use xlink:href="#cubo" transform="rotate(180) scale(0.75)"/>
-            <use xlink:href="#cubo" transform="scale(0.5)"/>
-            <use xlink:href="#cubo" transform="rotate(180) scale(0.25)"/>
-        </g>
     </defs>
     <use xlink:href="#cubo"/>
     <use xlink:href="#cubo" x="-13" y="-22.5"/>
