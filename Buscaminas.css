@@ -3,6 +3,37 @@
     --num-columnas: 10;
     --num-filas: 10;
     --size: 40px;
+    --fondo: #777;
+}
+
+body {
+    background-image: url("CubosFondo.svg");
+    background-size: 104px;
+    background-position: center;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+
+h1 {
+    color: #fcfc20;
+    text-shadow: 1px 1px 2px #3d3e00;
+}
+
+#fondo {
+    background-color: var(--fondo);
+    border-right: var(--fondo) solid 50px;
+    border-left: var(--fondo) solid 50px;
+    border-radius: 18px 16px;
+}
+
+#mensaje {
+    background-color: #00ff33;
+    color: #3d3d3d;
+    font-weight: bold;
+    border: #bbbbbb solid 5px;
+    margin: 40px;
+
 }
 
 #tablero{
