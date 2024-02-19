@@ -28,10 +28,13 @@ h1 {
 }
 
 #mensaje {
-    background-color: cyan;
+    background-color: lightskyblue;
     color: #3d3d3d;
     font-weight: bold;
-    border: #bbbbbb solid 5px;
+    border-left: 2px solid yellow;
+    border-top: 2px solid yellow;
+    border-right: 2px solid yellowgreen;
+    border-bottom: 2px solid yellowgreen;
     margin: 40px;
 
 }
@@ -45,6 +48,7 @@ h1 {
     border-left: 2px solid #D3D3D3;
     border-top: 2px solid #D3D3D3;
     border-right: 2px solid #A9A9A9;
+    border-bottom: 2px solid #A9A9A9;
     width: calc(var(--num-columnas)*var(--size));
 }
 #tablero div{
