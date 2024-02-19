@@ -126,7 +126,7 @@ function endGame(isWin) {
             if (gameBoard[row][col].isFlagged && !gameBoard[row][col].isMine) cell.classList.add("banderaErronea");
         }
     message.textContent = isWin ? "Felicidades, has ganado!" : "Has perdido! Intentalo de nuevo.";
-    message.classList = "red";
+    message.style.backgroundColor = isWin ? "lime" : "crimson";
 }
 
 // Inicialización del juego

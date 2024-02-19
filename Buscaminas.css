@@ -28,7 +28,7 @@ h1 {
 }
 
 #mensaje {
-    background-color: #00ff33;
+    background-color: cyan;
     color: #3d3d3d;
     font-weight: bold;
     border: #bbbbbb solid 5px;
@@ -85,16 +85,20 @@ h1 {
 #tablero div.c7{ color: #ff3300;}
 #tablero div.c8{ color: #660000;}
 
+.red {
+    background-color: red;
+}
+
 .icon-bandera {
     background-image: url("Banderita.svg");
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-size: 30px;
     background-position: center;
 }
 
 .icon-bomba {
     background-image: url("Mina.svg");
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-size: 30px;
     background-position: center;
 }
