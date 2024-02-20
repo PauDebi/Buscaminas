@@ -112,14 +112,18 @@ h1 {
 }
 
 .minaExplotadaAnimacion {
-    animation: shakeAnimation 0.3s;
+    animation: explosion 0.8s;
+    /*animation-iteration-count: 1;*/
 }
 
-@keyframes shakeAnimation {
-
-    0% { transform: scale(10%);}
-    75% { transform: scale(5000%);}
+@keyframes explosion {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    6.25% { transform: translate(5px, 5px) rotate(5deg); }
+    12.5% { transform: translate(0, 0) rotate(0deg); }
+    18.5% { transform: translate(-5px, 5px) rotate(-5deg); }
+    25% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: scale(10%);}
+    87% { transform: scale(5000%);}
     100% {opacity: 0; }
-
 }
 

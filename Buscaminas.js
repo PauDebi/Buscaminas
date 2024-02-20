@@ -1,7 +1,7 @@
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
 const gridSize = 10;
-const mineCount = 10;
+const mineCount = 5;
 let minesRemaining = mineCount,
     revealedCells = 0,
     gameBoard = [];
