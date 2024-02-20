@@ -1,9 +1,9 @@
 /*Pau y Jose*/
 :root{
-    --num-columnas: 10;
-    --num-filas: 10;
     --size: 40px;
     --fondo: #777;
+    --num-columnas : 10;
+    --num-filas : 10;
 }
 
 body {
@@ -26,6 +26,7 @@ h1 {
     border-left: var(--fondo) solid 50px;
     border-radius: 18px 16px;
 }
+
 
 #mensaje {
     background-color: lightskyblue;
@@ -71,6 +72,7 @@ h1 {
     border-bottom: 2px solid burlywood;
     text-shadow: 1px 1px 2px #999999;
     font-size: 16pt;
+    animation: revealAnimation 0.3s forwards;
 }
 #tablero div.minaExplotada{
     background-color: #FF0000;
@@ -103,3 +105,21 @@ h1 {
     background-size: 30px;
     background-position: center;
 }
+
+@keyframes revealAnimation {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.minaExplotadaAnimacion {
+    animation: shakeAnimation 0.3s;
+}
+
+@keyframes shakeAnimation {
+
+    0% { transform: scale(10%);}
+    75% { transform: scale(5000%);}
+    100% {opacity: 0; }
+
+}
+

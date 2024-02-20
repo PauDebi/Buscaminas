@@ -1,7 +1,7 @@
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
 const gridSize = 10;
-const mineCount = 3;
+const mineCount = 10;
 let minesRemaining = mineCount,
     revealedCells = 0,
     gameBoard = [];
@@ -44,6 +44,7 @@ function calculateNeighbors() {
     for (let row = 0; row < gridSize; row++)
         for (let col = 0; col < gridSize; col++)
             if (!gameBoard[row][col].isMine)
+
                 for (let r = row - 1; r <= row + 1; r++)
                     for (let c = col - 1; c <= col + 1; c++)
                         if (r >= 0 && c >= 0 && r < gridSize && c < gridSize && gameBoard[r][c].isMine)
@@ -60,6 +61,7 @@ function revealCell(row, col) {
     revealedCells++;
     if (cell.isMine){
         casilla.classList.add("minaExplotada");
+        board.classList.add("minaExplotadaAnimacion");
         endGame(false); //Si la casilla es una mina, se acaba el juego
     }
     else if (cell.neighbors === 0)
@@ -103,9 +105,9 @@ function updateBoard() {
                 if (gameBoard[row][col].isMine)
                     cell.classList.add("icon-bomba");
                 else {
-                    cell.textContent = gameBoard[row][col].neighbors || "";
+                    cell.textContent = gameBoard[row][col].neighbors || ""; // Esto mete un string al div con la cantidad de vecinos (minas) que tiene la casilla
                     cell.classList.add("destapado");
-                    cell.classList.add("c" + gameBoard[row][col].neighbors);
+                    cell.classList.add("c" + gameBoard[row][col].neighbors); // Esto le da el color al numero segun la canitdad de minas que tenga cerca
                 }
             } else if (gameBoard[row][col].isFlagged)
                 cell.classList.add("icon-bandera");
@@ -117,7 +119,7 @@ function updateBoard() {
 
 // Función para finalizar el juego (victoria o derrota)
 function endGame(isWin) {
-    for (let row = 0; row < gridSize; row++) // Se revelan todas las casillas
+    for (let row = 0; row < gridSize; row++)
         for (let col = 0; col < gridSize; col++) {
             const cell = board.children[row * gridSize + col];
             cell.removeEventListener("click", handleClick);// Se desactivan los eventListener para no desperdiciar memoria
