@@ -137,3 +137,25 @@ h1 {
     87% { transform: scale(5000%);}
     100% {opacity: 0; }
 }
+
+#options {
+    color: yellowgreen;
+    margin: 20px 100px 20px 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: gray;
+    border-radius: 18px 16px;
+    font-size: 30px;
+}
+
+button {
+    height: 100px;
+    width: 90px;
+    background-color: lime;
+}
+#medio {
+    background-color: orange;
+}
+#dificil{
+    background-color: red;
+}
