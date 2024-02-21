@@ -1,3 +1,4 @@
+/*Pau y Jose*/
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
 const gridSize = 10;
