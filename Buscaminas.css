@@ -52,6 +52,7 @@ h1 {
     border-bottom: 2px solid #A9A9A9;
     width: calc(var(--num-columnas)*var(--size));
 }
+
 #tablero div{
     background-color: lime;
     border-left: 2px solid lightgreen;
@@ -74,9 +75,11 @@ h1 {
     font-size: 16pt;
     animation: revealAnimation 0.3s forwards;
 }
+
 #tablero div.minaExplotada{
     background-color: #FF0000;
 }
+
 #tablero div.banderaErronea{
     background-color: lime;
     border: 5px solid red;
@@ -111,9 +114,17 @@ h1 {
     100% { transform: scale(1); opacity: 1; }
 }
 
+@keyframes respawnAnimation {
+    from {background-color: saddlebrown}
+    to {background-color: lime}
+}
+
 .minaExplotadaAnimacion {
     animation: explosion 0.8s;
-    /*animation-iteration-count: 1;*/
+}
+
+.spawnAnimation {
+    animation: respawnAnimation 10s ;
 }
 
 @keyframes explosion {
@@ -126,4 +137,3 @@ h1 {
     87% { transform: scale(5000%);}
     100% {opacity: 0; }
 }
-

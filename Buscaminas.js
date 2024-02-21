@@ -2,7 +2,7 @@
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
 const gridSize = 10;
-const mineCount = 5;
+const mineCount = 3;
 let minesRemaining = mineCount,
     revealedCells = 0,
     gameBoard = [];
@@ -119,19 +119,24 @@ function updateBoard() {
 }
 
 // Función para finalizar el juego (victoria o derrota)
-function endGame(isWin) {
-    for (let row = 0; row < gridSize; row++)
-        for (let col = 0; col < gridSize; col++) {
-            const cell = board.children[row * gridSize + col];
-            cell.removeEventListener("click", handleClick);// Se desactivan los eventListener para no desperdiciar memoria
-            cell.removeEventListener("contextmenu", handleRightClick);
-            if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged && isWin) cell.classList.add("icon-bandera"); // Si es una mina, no tiene bandera y has ganado, la celda se marca como bandera
-            if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged && !isWin) gameBoard[row][col].isRevealed = true; // Si es una mina, no tiene bandera y has perdido, la celda se revela como mina
-            if (gameBoard[row][col].isFlagged && !gameBoard[row][col].isMine) cell.classList.add("banderaErronea"); // Si tiene una bandera donde no hay una mina, se marca como erronea
-        }
-    message.textContent = isWin ? "Felicidades, has ganado!" : "Has perdido! Intentalo de nuevo.";
-    message.style.backgroundColor = isWin ? "lime" : "crimson";
-}
+    function endGame(isWin) {
+        for (let row = 0; row < gridSize; row++)
+            for (let col = 0; col < gridSize; col++) {
+                const cell = board.children[row * gridSize + col];
+                cell.removeEventListener("click", handleClick);// Se desactivan los eventListener para no desperdiciar memoria
+                cell.removeEventListener("contextmenu", handleRightClick);
+                if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged && isWin) cell.classList.add("icon-bandera"); // Si es una mina, no tiene bandera y has ganado, la celda se marca como bandera
+                if (gameBoard[row][col].isMine && !gameBoard[row][col].isFlagged && !isWin) gameBoard[row][col].isRevealed = true; // Si es una mina, no tiene bandera y has perdido, la celda se revela como mina
+                if (gameBoard[row][col].isFlagged && !gameBoard[row][col].isMine) cell.classList.add("banderaErronea"); // Si tiene una bandera donde no hay una mina, se marca como erronea
+                if (isWin && !cell.classList.contains("icon-bandera")) {
+                    cell.classList.remove("destapado");
+                    cell.textContent = ("");
+                    cell.classList.add("spawnAnimation");
+                }
+            }
+        message.textContent = isWin ? "Felicidades, has ganado!" : "Has perdido! Intentalo de nuevo.";
+        message.style.backgroundColor = isWin ? "lime" : "crimson";
+    }
 
 // Inicialización del juego
 createBoard();
