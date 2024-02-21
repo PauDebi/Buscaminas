@@ -1,11 +1,21 @@
 /*Pau y Jose*/
 const board = document.getElementById("tablero");
 const message = document.getElementById("mensaje");
-const gridSize = 10;
-const mineCount = 3;
-let minesRemaining = mineCount,
-    revealedCells = 0,
+let gridSize,
+    mineCount,
+    minesRemaining,
+    revealedCells,
     gameBoard = [];
+
+// Inicialización del juego
+function start(){
+    resetBoard();
+    minesRemaining = mineCount;
+    createBoard();
+    plantMines();
+    calculateNeighbors();
+    updateMinesRemaining();
+}
 
 // Función para crear el tablero
 function createBoard() {
@@ -138,8 +148,43 @@ function updateBoard() {
         message.style.backgroundColor = isWin ? "lime" : "crimson";
     }
 
-// Inicialización del juego
-createBoard();
-plantMines();
-calculateNeighbors();
-updateMinesRemaining();
+
+function onButtonClick(str) {
+    switch (str){
+        case ("easy"):
+            mineCount = 10;
+            gridSize = 10;
+            start()
+            break;
+        case ("medium"):
+            mineCount = 40;
+            gridSize = 15;
+            start()
+            break;
+        case ("hard"):
+            mineCount = 80;
+            gridSize = 20;
+            start()
+    }
+}
+
+function resetBoard() {
+    // Eliminar todos los divs dentro del tablero
+    board.innerHTML = "";
+
+    // Reiniciar todos los valores en gameBoard a false
+    gameBoard = Array.from({ length: gridSize }, () =>
+        Array.from({ length: gridSize }, () => ({
+            isMine: false,
+            isRevealed: false,
+            isFlagged: false,
+            neighbors: 0
+        }))
+    );
+    // Recuperar valores originales
+    message.style.backgroundColor = "lightskyblue";
+    board.classList.remove("minaExplotadaAnimacion");
+
+    // Reiniciar el contador de celdas reveladas
+    revealedCells = 0;
+}

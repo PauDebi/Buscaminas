@@ -1,8 +1,8 @@
 <!--Pau y Jose-->
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
     <title>Buscaminas</title>
     <link rel="stylesheet" type="text/css" href="Buscaminas.css">
 </head>
@@ -17,9 +17,9 @@
 	<b>Options</b>
 	<br/>
 	<br/>
-	<button>Facil<br/>Tamaño: 10<br/>Minas: 10</button>
-	<button id="medio">Medio<br/>Tamaño: 20<br/>Minas: 15</button>
-	<button id="dificil">Dificil<br/>Tamaño: 30<br/>Minas: 30</button>
+	<button onclick="onButtonClick('easy')">Facil<br/>Tamaño: 10<br/>Minas: 10</button>
+	<button id="medio" onclick="onButtonClick('medium')">Medio<br/>Tamaño: 15<br/>Minas: 40</button>
+	<button id="dificil" onclick="onButtonClick('hard')">Dificil<br/>Tamaño: 20<br/>Minas: 80</button>
 </div>
 <script src="Buscaminas.js"></script>
 </body>
