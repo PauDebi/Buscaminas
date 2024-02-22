@@ -65,11 +65,13 @@ function calculateNeighbors() {
 // Función para revelar una casilla del tablero
 function revealCell(row, col) {
     if ((row < 0 || col < 0 || row >= gridSize || col >= gridSize) || gameBoard[row][col].isRevealed || gameBoard[row][col].isFlagged) return; //Evitar desbordamiento
+
     const casilla = board.children[row * gridSize + col];
     const cell = gameBoard[row][col];
+
     cell.isRevealed = true;
     if (!cell.isMine)
-    revealedCells++;
+        revealedCells++;
     if (cell.isMine){
         casilla.classList.add("minaExplotada");
         board.classList.add("minaExplotadaAnimacion");
@@ -81,6 +83,7 @@ function revealCell(row, col) {
                 revealCell(r, c);
     updateBoard();
     if (revealedCells === gridSize * gridSize - mineCount) endGame(true);
+
 }
 
 // Manejador de clics en una casilla
@@ -169,22 +172,12 @@ function onButtonClick(str) {
 }
 
 function resetBoard() {
-    // Eliminar todos los divs dentro del tablero
-    board.innerHTML = "";
+    board.innerHTML = ""; // Eliminar todos los divs dentro del tablero
+    gameBoard = []; //Limpiar el array de gameBoard
 
-    // Reiniciar todos los valores en gameBoard a false
-    gameBoard = Array.from({ length: gridSize }, () =>
-        Array.from({ length: gridSize }, () => ({
-            isMine: false,
-            isRevealed: false,
-            isFlagged: false,
-            neighbors: 0
-        }))
-    );
     // Recuperar valores originales
     message.style.backgroundColor = "lightskyblue";
     board.classList.remove("minaExplotadaAnimacion");
 
-    // Reiniciar el contador de celdas reveladas
-    revealedCells = 0;
+    revealedCells = 0; // Reiniciar el contador de celdas reveladas
 }
