@@ -12,7 +12,7 @@ const medium = {
     button: document.getElementById("medio")
 };
 const hard = {
-    minas: 70,
+    minas: 399,
     tamano: 20,
     button: document.getElementById("dificil")
 };
@@ -27,9 +27,6 @@ function start(){
     resetBoard();
     minesRemaining = mineCount;
     createBoard();
-    plantMines();
-    calculateNeighbors();
-    updateMinesRemaining();
 }
 
 // Función para crear el tablero
@@ -55,16 +52,17 @@ function createBoard() {
 }
 
 // Función para colocar las minas en el tablero
-function plantMines() {
+function plantMines(firstrow, fristcol) {
     for (let i = 0; i < mineCount;) {
         let row = Math.floor(Math.random() * gridSize);
         let col = Math.floor(Math.random() * gridSize);
-        if (!gameBoard[row][col].isMine) {
+        if (!gameBoard[row][col].isMine && gameBoard[firstrow][fristcol] !== gameBoard[row][col]) {
             gameBoard[row][col].isMine = true;
             i++;
         }
     }
 }
+
 // Función para calcular el número de minas vecinas para cada casilla
 function calculateNeighbors() {
     for (let row = 0; row < gridSize; row++)
@@ -79,7 +77,13 @@ function calculateNeighbors() {
 
 // Función para revelar una casilla del tablero
 function revealCell(row, col) {
-    if ((row < 0 || col < 0 || row >= gridSize || col >= gridSize) || gameBoard[row][col].isRevealed || gameBoard[row][col].isFlagged) return; //Evitar desbordamiento
+    if ((row < 0 || col < 0 || row >= gridSize || col >= gridSize) || gameBoard[row][col].isRevealed || gameBoard[row][col].isFlagged) return; //Evitar desbordamiento (Pergunta si exista la casilla dentro del tablero)
+
+    if (revealedCells === 0){
+        plantMines(row, col);
+        calculateNeighbors();
+        updateMinesRemaining();
+    }
 
     const casilla = board.children[row * gridSize + col];
     const cell = gameBoard[row][col];
