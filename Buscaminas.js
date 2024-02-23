@@ -121,6 +121,7 @@ function handleRightClick(event) {
         cell.isFlagged = !cell.isFlagged;
         event.target.classList.toggle("icon-bandera", cell.isFlagged);
         minesRemaining += cell.isFlagged ? -1 : 1;
+        updateMinesRemaining();
     }
 }
 
