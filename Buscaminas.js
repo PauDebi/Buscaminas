@@ -12,7 +12,7 @@ const medium = {
     button: document.getElementById("medio")
 };
 const hard = {
-    minas: 80,
+    minas: 70,
     tamano: 20,
     button: document.getElementById("dificil")
 };
