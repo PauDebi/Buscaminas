@@ -12,7 +12,7 @@ const medium = {
     button: document.getElementById("medio")
 };
 const hard = {
-    minas: 399,
+    minas: 80,
     tamano: 20,
     button: document.getElementById("dificil")
 };
@@ -27,6 +27,7 @@ function start(){
     resetBoard();
     minesRemaining = mineCount;
     createBoard();
+    updateMinesRemaining();
 }
 
 // Función para crear el tablero
@@ -120,7 +121,6 @@ function handleRightClick(event) {
         cell.isFlagged = !cell.isFlagged;
         event.target.classList.toggle("icon-bandera", cell.isFlagged);
         minesRemaining += cell.isFlagged ? -1 : 1;
-        updateMinesRemaining();
     }
 }
 
